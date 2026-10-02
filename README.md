@@ -103,15 +103,12 @@ API reference: https://openrouter.ai/docs/guides/community/jev-tutorial
 
 GitHub Pages publishes the root of `gh-pages`. Source code and generated files
 live on `main`; the `gh-pages` branch contains only the `web` directory contents.
-After rendering and committing changes on `main`:
+After rendering and committing changes on `main`, publish with:
 
 ```sh
-git remote -v
-git push origin main
-git subtree split --prefix=web -b pages-update
-git remote -v
-git push origin pages-update:gh-pages
-git branch -D pages-update
+python3 publish.py
 ```
 
-Confirm that `origin` is `not-stbenjam/historical-heatmap` before each push.
+The script verifies `origin` before each push, publishes the committed `main:web`
+tree, and preserves Pages deployment history. It requires Git and an authenticated
+GitHub CLI; it uses normal pushes and refuses an unexpected destination.
