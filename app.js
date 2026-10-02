@@ -111,9 +111,10 @@
     ranks.sort((a,b)=>b.p-a.p||a.i-b.i);
     const container=$('top-dates');container.replaceChildren();
     for(const [rank,item] of ranks.slice(0,expanded?60:12).entries()) {
-      const date=iso(start+item.i*DAY),button=document.createElement('button');button.className='rank-item';
-      for(const [className,value] of [['rank-number',String(rank+1).padStart(2,'0')],['rank-date',short(date)],['rank-confidence',pct(item.p)]]){const span=document.createElement('span');span.className=className;span.textContent=value;button.append(span);}
-      const swatch=document.createElement('span');swatch.className='rank-swatch';swatch.style.background=color(item.p);button.append(swatch);button.addEventListener('click',()=>selectDate(date,true));container.append(button);
+      const date=iso(start+item.i*DAY),link=document.createElement('a');link.className='rank-item';
+      link.href='https://www.google.com/search?q='+encodeURIComponent(pretty(date)+' historical events');link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label','Google historical events on '+pretty(date));
+      for(const [className,value] of [['rank-number',String(rank+1).padStart(2,'0')],['rank-date',short(date)],['rank-confidence',pct(item.p)]]){const span=document.createElement('span');span.className=className;span.textContent=value;link.append(span);}
+      const swatch=document.createElement('span');swatch.className='rank-swatch';swatch.style.background=color(item.p);link.append(swatch);container.append(link);
     }
     $('toggle-ranked').textContent=expanded?'Show top 12':'Show top 60';
   }
