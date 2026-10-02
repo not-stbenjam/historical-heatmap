@@ -83,6 +83,23 @@ Colors use the same fixed 0–1 scale at every zoom level. The value is Jev's re
 probability that the answer is **yes**, not an importance score or a verified
 probability that a historical event happened.
 
+The additional views use these same saved scores without making new API requests:
+
+- **Highest-scoring years** ranks complete years by days scoring at least 90%, or
+  by mean probability. Click a year to zoom the heatmap.
+- **History over time** plots yearly means or decade means, weighted by evaluated
+  days. Yearly and decade comparisons include only complete years, so partial
+  2026 is excluded. The first and last decades can contain fewer than ten years.
+  Hover or use arrow keys to select; click or press Enter to zoom.
+- **Unusually significant dates** ranks each date by its probability minus the
+  mean for that month/day in all other evaluated years. Lift is expressed in
+  percentage points (pp), rather than as a probability. This highlights spikes
+  above recurring calendar patterns without establishing historical importance.
+- **Calendar fingerprints** averages each month/day across all evaluated years,
+  including partial 2026. A leap-year layout aligns the calendar tiles; its
+  weekdays are for layout only. February 29 averages only actual leap days.
+  Select a tile to see its three highest-scoring dates. Date links search Google.
+
 Dates are generated using the proleptic Gregorian calendar. Event annotations use
 their commonly cited dates, without converting historical calendar conventions;
 this matters for early dates such as Columbus's landing. No date convention is

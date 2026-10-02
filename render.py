@@ -6,6 +6,7 @@ from datetime import date, timedelta
 import json
 import os
 from pathlib import Path
+import re
 import sqlite3
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(".cache/matplotlib").resolve()))
@@ -117,10 +118,13 @@ def main():
     (web / "summary.json").write_text(json.dumps({key: value for key, value in data.items() if key != "probabilities"}, indent=2))
     # A portable page also works from file:// with no server or network.
     template = (web / "index.html").read_text()
-    script = (web / "app.js").read_text()
     style = (web / "style.css").read_text()
-    portable = template.replace('<link rel="stylesheet" href="style.css">', "<style>" + style + "</style>")
-    portable = portable.replace('<script src="app.js" defer></script>', '<script>window.HISTORY_DATA=' + json.dumps(data, separators=(",", ":")) + ";</script><script defer>" + script + "</script>")
+    portable = re.sub(r'<link rel="stylesheet" href="style\.css(?:\?[^\"]*)?">', lambda _: "<style>" + style + "</style>", template)
+    for name in ["analytics.js", "app.js", "insights.js"]:
+        inline = '<script defer>' + (web / name).read_text() + '</script>'
+        if name == "app.js":
+            inline = '<script>window.HISTORY_DATA=' + json.dumps(data, separators=(",", ":")) + ";</script>" + inline
+        portable = re.sub(r'<script src="' + re.escape(name) + r'(?:\?[^\"]*)?" defer></script>', lambda _, value=inline: value, portable)
     (web / "history.html").write_text(portable)
     with (web / "results.csv").open("w", newline="") as handle:
         writer = csv.writer(handle)
