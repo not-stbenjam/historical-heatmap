@@ -146,6 +146,7 @@
       $('export-csv').addEventListener('click',()=>{const rows=['date,probability_yes'];data.probabilities.forEach((p,i)=>rows.push(iso(start+i*DAY)+','+(p??'')));download(new Blob([rows.join('\n')],{type:'text/csv'}),'jev-history-all-dates.csv');});
       let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(renderMap,100);});
       window.HISTORY_VIEW={selectDate,setRange,color,get data(){return data;}};
+      window.dispatchEvent(new Event('history-ready'));
     } catch(error) {$('loading').textContent='Could not load the experiment: '+error.message;console.error(error);}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
