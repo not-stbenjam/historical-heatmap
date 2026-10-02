@@ -1,0 +1,9 @@
+.venv/
+.cache/
+__pycache__/
+.env
+.env.*
+*.key
+data/*.sqlite*
+data/*.jsonl
+data/status.json

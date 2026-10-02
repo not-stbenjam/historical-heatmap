@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Jev sees history</title>
+  <meta name="description" content="Jev's probability of historical significance for every date from 1492 through 2026.">
+  <meta property="og:title" content="How Jev sees history">
+  <meta property="og:description" content="195,315 dates. One question. A historical heatmap from Jev 1.13.">
+  <meta property="og:image" content="https://not-stbenjam.github.io/historical-heatmap/heatmap.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <h1>How Jev sees history</h1>
+  </header>
+  <section class="stats" aria-label="Experiment statistics">
+    <div><strong id="dates-count">—</strong><span>DATES EVALUATED</span></div>
+    <div><strong id="high-count">—</strong><span>DATES ≥ 90% YES</span></div>
+    <div><strong id="mean-confidence">—</strong><span>MEAN P(YES)</span></div>
+    <div><strong id="run-cost">—</strong><span>REPORTED API COST</span></div>
+  </section>
+  <section class="map-section" aria-labelledby="map-heading">
+    <div class="section-title"><h2 id="map-heading">Heatmap</h2><span id="range-description" class="map-tag">1492–2026</span></div>
+    <div class="toolbar">
+      <div class="presets" role="group" aria-label="Year range"><button data-range="all" class="active">All years</button><button data-range="1900">1900 onwards</button><button data-range="1945">1945</button><button data-range="1969">1969</button></div>
+      <div class="range-inputs"><label>From <input id="year-from" type="number" min="1492" max="2026" value="1492"></label><label>To <input id="year-to" type="number" min="1492" max="2026" value="2026"></label><button id="apply-range">Apply</button></div>
+    </div>
+    <div class="filter"><label for="threshold">Show probabilities ≥ <strong id="threshold-label">0%</strong></label><input id="threshold" type="range" min="0" max="100" value="0" step="1"><button id="threshold-reset">Reset</button></div>
+    <div class="map-wrap"><canvas id="heatmap" tabindex="0" aria-label="Historical confidence heatmap. Use arrow keys to select adjacent dates."></canvas><div id="loading">Loading the experiment…</div><div id="tooltip" hidden></div></div>
+    <div class="legend"><span class="legend-label">LESS LIKELY</span><div class="legend-scale"><div class="gradient"></div><div class="legend-ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div><span class="legend-label">MORE LIKELY</span><span class="missing-swatch"></span><span>Missing</span></div>
+  </section>
+  <section class="detail" aria-labelledby="selected-heading">
+    <div class="selected-main"><div class="date-row"><h2 id="selected-heading">July 20, 1969</h2><strong id="selected-probability">—</strong></div><div id="selected-event"></div><label class="jump">Jump to a date <input id="date-input" type="date" min="1492-01-01" max="2026-10-02" value="1969-07-20"></label></div>
+    <div class="neighbors"><div id="neighbor-strip"></div><div class="strip-captions"><span id="neighbor-start"></span><span>Selected day</span><span id="neighbor-end"></span></div></div>
+  </section>
+  <section class="anchors" aria-labelledby="anchors-heading"><div class="section-title"><h2 id="anchors-heading">Historical events</h2></div><div id="event-buttons"></div></section>
+  <section class="ranking" aria-labelledby="ranking-heading"><div class="section-title"><h2 id="ranking-heading">Highest probabilities</h2><button id="toggle-ranked">Show top 60</button></div><div id="top-dates"></div></section>
+  <footer class="exports"><button id="export-png">Download PNG ↗</button><button id="export-csv">Download CSV ↗</button></footer>
+</main>
+</body>
+</html>
